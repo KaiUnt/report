@@ -1,0 +1,84 @@
+Auflistung der Ordnerpfade für Volume Windows-SSD
+Volumeseriennummer : 280F-5418
+C:.
+¦   .gitignore
+¦   create_modules.py
+¦   ordnerstruktur.txt
+¦   README.md
+¦   requirements.txt
+¦   setup.py
+¦   
++---examples
+¦       generate_rankings.py
+¦       
++---fwt_rankings
+¦   ¦   __init__.py
+¦   ¦   
+¦   +---api
+¦   ¦   ¦   client.py
+¦   ¦   ¦   queries.py
+¦   ¦   ¦   __init__.py
+¦   ¦   ¦   
+¦   ¦   +---fetchers
+¦   ¦   ¦       __init__.py
+¦   ¦   ¦       
+¦   ¦   +---__pycache__
+¦   ¦           client.cpython-313.pyc
+¦   ¦           queries.cpython-313.pyc
+¦   ¦           __init__.cpython-313.pyc
+¦   ¦           
+¦   +---data
+¦   ¦   ¦   models.py
+¦   ¦   ¦   processors.py
+¦   ¦   ¦   series_ids.csv
+¦   ¦   ¦   __init__.py
+¦   ¦   ¦   
+¦   ¦   +---__pycache__
+¦   ¦           models.cpython-313.pyc
+¦   ¦           processors.cpython-313.pyc
+¦   ¦           __init__.cpython-313.pyc
+¦   ¦           
+¦   +---pdf
+¦   ¦   ¦   components.py
+¦   ¦   ¦   generator.py
+¦   ¦   ¦   styles.py
+¦   ¦   ¦   __init__.py
+¦   ¦   ¦   
+¦   ¦   +---__pycache__
+¦   ¦           components.cpython-313.pyc
+¦   ¦           generator.cpython-313.pyc
+¦   ¦           styles.cpython-313.pyc
+¦   ¦           __init__.cpython-313.pyc
+¦   ¦           
+¦   +---utils
+¦   ¦   ¦   logging.py
+¦   ¦   ¦   __init__.py
+¦   ¦   ¦   
+¦   ¦   +---__pycache__
+¦   ¦           logging.cpython-313.pyc
+¦   ¦           __init__.cpython-313.pyc
+¦   ¦           
+¦   +---__pycache__
+¦           __init__.cpython-313.pyc
+¦           
++---fwt_rankings.egg-info
+¦       dependency_links.txt
+¦       PKG-INFO
+¦       requires.txt
+¦       SOURCES.txt
+¦       top_level.txt
+¦       
++---reports
+¦       2024_Fieberbrunn_Pro_20241121_2141.pdf
+¦       2024_Fieberbrunn_Pro_Rankings_20241121_2142.pdf
+¦       rankings_report_20241121_2118.pdf
+¦       rankings_report_20241121_2121.pdf
+¦       rankings_report_20241121_2122.pdf
+¦       rankings_report_2024_Fieberbrunn_Pro_20241121_2140.pdf
+¦       
++---tests
+        test_api.py
+        test_data.py
+        test_pdf.py
+        __init__.py
+        

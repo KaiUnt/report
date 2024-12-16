@@ -1,5 +1,5 @@
-const eventsUrl = 'http://127.0.0.1:8000/events';
-const generatePdfUrl = 'http://127.0.0.1:8000/generate_pdf';
+const eventsUrl = 'http://16.171.3.146/events';
+const generatePdfUrl = 'http://16.171.3.146/generate_pdf';
 const eventSearch = document.getElementById('eventSearch');
 const eventList = document.getElementById('eventList');
 const statusDiv = document.getElementById('status');

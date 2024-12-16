@@ -14,7 +14,7 @@ logger = logging.getLogger(__name__)
 
 app = FastAPI()
 
-app.mount("/index", StaticFiles(directory="frontend", html=True), name="static")
+app.mount("/", StaticFiles(directory="frontend", html=True), name="static")
 
 # CORS Middleware hinzufügen
 app.add_middleware(

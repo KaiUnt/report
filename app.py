@@ -1,4 +1,5 @@
-from fastapi import FastAPI, HTTPException, staticfiles
+from fastapi import FastAPI, HTTPException
+from fastapi.staticfiles import StaticFiles
 from fwt_rankings.api.client import LiveheatsClient
 from fastapi.responses import FileResponse
 import os
@@ -13,7 +14,7 @@ logger = logging.getLogger(__name__)
 
 app = FastAPI()
 
-app.mount("/", staticfiles(directory="frontend", html=True), name="static")
+app.mount("/", StaticFiles(directory="frontend", html=True), name="static")
 
 # CORS Middleware hinzufügen
 app.add_middleware(

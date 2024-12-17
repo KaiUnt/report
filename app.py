@@ -14,6 +14,9 @@ logger = logging.getLogger(__name__)
 
 app = FastAPI()
 
+# Pfad zur Python-Umgebung
+python_executable = os.path.join(os.getcwd(), "venv", "bin", "python")
+
 app.mount("/index", StaticFiles(directory="frontend", html=True), name="static")
 
 # CORS Middleware hinzufügen
@@ -78,10 +81,9 @@ async def generate_pdf(event_id: str):
         logger.info(f"Starte PDF-Generierung für Event-ID: {event_id}")
         script_path = os.path.join(os.path.dirname(__file__), "generate_rankings_web.py")
 
-        # Starte das Skript
         os.makedirs("reports", exist_ok=True)
         subprocess.run(
-            ["python", script_path, event_id],
+            [python_executable, script_path, event_id],
             check=True
         )
 

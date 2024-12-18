@@ -1,5 +1,5 @@
-const eventsUrl = 'http://16.171.3.146/events';
-const generatePdfUrl = 'http://16.171.3.146/generate_pdf';
+const eventsUrl = 'https://report.open-faces.com/events';
+const generatePdfUrl = 'https://report.open-faces.com/generate_pdf';
 const eventSearch = document.getElementById('eventSearch');
 const eventList = document.getElementById('eventList');
 const statusDiv = document.getElementById('status');

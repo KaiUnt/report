@@ -22,9 +22,9 @@ app.mount("/index", StaticFiles(directory="frontend", html=True), name="static")
 # CORS Middleware hinzufügen
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Erlaube alle Ursprünge (für lokale Entwicklung)
-    allow_methods=["*"],  # Erlaube alle Methoden
-    allow_headers=["*"],  # Erlaube alle Header
+    allow_origins=["https://report.open-faces.com"],  # Nur deine Domain erlauben
+    allow_methods=["GET", "POST"],  # Erlaube nur notwendige HTTP-Methoden
+    allow_headers=["Content-Type", "Authorization"],  # Nur notwendige Header erlauben
 )
 
 # Cache für Event-Daten

@@ -8,6 +8,7 @@ import logging
 import subprocess
 from datetime import datetime, timedelta
 from fastapi.middleware.cors import CORSMiddleware
+from contextlib import asynccontextmanager
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -50,27 +51,41 @@ async def update_events_cache():
 async def update_events_daily_at_fixed_time():
     """Aktualisiert den Cache jeden Tag um 3:00 Uhr morgens."""
     while True:
-        now = datetime.now()
-        # Berechne die nächste Ausführungszeit
-        next_update = now.replace(hour=3, minute=0, second=0, microsecond=0)
-        if now >= next_update:
-            next_update += timedelta(days=1)  # Falls die Zeit heute schon vorbei ist, auf morgen setzen
-        
-        # Warte bis zur nächsten Ausführungszeit
-        wait_time = (next_update - now).total_seconds()
-        logger.info(f"Nächste Aktualisierung des Event-Caches um: {next_update}")
-        await asyncio.sleep(wait_time)
+        try:
+            now = datetime.now()
+            next_update = now.replace(hour=3, minute=0, second=0, microsecond=0)
+            if now >= next_update:
+                next_update += timedelta(days=1)
 
-        # Aktualisiere den Cache
-        await update_events_cache()
+            wait_time = (next_update - now).total_seconds()
+            logger.info(f"Nächste Aktualisierung des Event-Caches um: {next_update}")
+            await asyncio.sleep(wait_time)
+
+            # Aktualisiere den Cache
+            await update_events_cache()
+        except Exception as e:
+            logger.error(f"Fehler im täglichen Aktualisierungs-Task: {e}")
+            # Task wird neu gestartet
+            continue
+
+async def lifespan(app: FastAPI):
+    # Initialisierung beim Start
+    logger.info("Initialisiere den Event-Cache beim Start der Anwendung...")
+    await update_events_cache()  # Einmaliger Start
+    asyncio.create_task(update_events_daily_at_fixed_time())  # Täglichen Task starten
+
+    yield  # App wird gestartet
+
+    # Bereinigung beim Shutdown (falls erforderlich)
+    logger.info("Anwendung wird heruntergefahren...")
 
 @app.get("/events")
 async def get_events():
-    """Endpunkt für Events - prüft Cache und aktualisiert bei Bedarf."""
+    """Endpunkt für Events - prüft Cache und aktualisiert ihn bei Bedarf."""
     global event_cache
     # Prüfe, ob der Cache gültig ist
-    if not event_cache["data"] or (datetime.now() - event_cache["last_updated"] > timedelta(hours=24)):
-        logger.info("Cache ist veraltet oder leer. Aktualisiere...")
+    if not event_cache["data"] or (datetime.now() - event_cache["last_updated"]).total_seconds() > 24 * 3600:
+        logger.info("Cache ist veraltet oder leer. Lade Events erneut...")
         await update_events_cache()
     return {"events": event_cache["data"]}
 

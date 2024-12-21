@@ -114,29 +114,33 @@ class RankingsProcessor:
                 continue
 
             # Track best series result by overall place
-            if result.place and (not best_series_by_place or result.place < best_series_by_place.place):
+            if result.place and \
+            (not best_series_by_place or result.place < best_series_by_place.place) and \
+            not any(term.lower() in result.series_name.lower() for term in ["National Ranking", "Seeding List"]):
                 best_series_by_place = result
 
-            # Track best Pro and Challenger series
+            # Best Pro Event
             if 'Pro' in result.series_name:
                 if result.place and (not best_pro_by_place or result.place < best_pro_by_place.place):
                     best_pro_by_place = result
-                
-                valid_events = [e for e in result.results if e and e.points is not None]
-                if valid_events:
-                    current_best = max(valid_events, key=lambda x: x.points)
+
+                valid_pro_events = [
+                    e for e in result.results 
+                    if e and e.points is not None and any(term in e.event_name for term in ['Pro', 'Freeride World Tour'])
+    ]
+                if valid_pro_events:
+                    current_best = max(valid_pro_events, key=lambda x: x.points)
                     if not best_pro_by_event or current_best.points > best_pro_by_event.points:
                         best_pro_by_event = current_best
 
-            elif 'Challenger' in result.series_name:
-                if result.place and (not best_challenger_by_place or result.place < best_challenger_by_place.place):
-                    best_challenger_by_place = result
-                
-                valid_events = [e for e in result.results if e and e.points is not None]
-                if valid_events:
-                    current_best = max(valid_events, key=lambda x: x.points)
+            # Best Challenger Event
+            if 'Challenger' in result.series_name:
+                valid_challenger_events = [e for e in result.results if e and e.points is not None and 'Challenger' in e.event_name]
+                if valid_challenger_events:
+                    current_best = max(valid_challenger_events, key=lambda x: x.points)
                     if not best_challenger_by_event or current_best.points > best_challenger_by_event.points:
                         best_challenger_by_event = current_best
+
 
             # Collect all valid event results
             all_events.extend([e for e in result.results if e is not None])

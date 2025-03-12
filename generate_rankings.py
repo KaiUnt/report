@@ -10,7 +10,7 @@ logger = get_logger(__name__)
 
 async def main():
     # Konfiguration
-    event_id = "176499"  # Obergurgl ID
+    event_id = "291176"  # Nendaz ID
     #event_id = "286724"  # Alpbach ID
     #event_id = "288665"  # Japan ID
     #event_id = "286553"  # FreerideHer ID

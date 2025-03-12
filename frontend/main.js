@@ -54,6 +54,49 @@ function renderEventList(events) {
     });
 }
 
+function renderEventList(events) {
+    eventList.innerHTML = ''; // Alte Liste leeren
+    if (events.length === 0) {
+        eventList.innerHTML = '<li>Keine passenden Events gefunden.</li>';
+        return;
+    }
+
+    events.forEach(event => {
+        const listItem = document.createElement('li');
+        listItem.className = 'event-container';
+
+        // Event-Name
+        const eventInfo = document.createElement('span');
+        eventInfo.textContent = `${event.name} (${new Date(event.date).toLocaleDateString()})`;
+
+        // Button-Container für Download und Dashboard
+        const buttonContainer = document.createElement('div');
+        buttonContainer.className = 'button-container';
+
+        // Download-Button
+        const downloadBtn = document.createElement('button');
+        downloadBtn.textContent = 'Download PDF';
+        downloadBtn.className = 'download-btn';
+        downloadBtn.addEventListener('click', () => generatePdf(event.id, downloadBtn));
+        
+        // Dashboard-Button
+        const dashboardBtn = document.createElement('button');
+        dashboardBtn.textContent = 'View Dashboard';
+        dashboardBtn.className = 'dashboard-btn';
+        dashboardBtn.addEventListener('click', () => {
+            window.location.href = `dashboard.html?event_id=${event.id}`;
+        });
+
+        // Buttons zum Container hinzufügen
+        buttonContainer.appendChild(downloadBtn);
+        buttonContainer.appendChild(dashboardBtn);
+
+        // Zusammenfügen
+        listItem.appendChild(eventInfo);
+        listItem.appendChild(buttonContainer);
+        eventList.appendChild(listItem);
+    });
+}
 
 // PDF generieren
 async function generatePdf(eventId, button) {

@@ -41,7 +41,7 @@ async function fetchAthleteData() {
     showLoading(true);
     
     try {
-        const response = await fetch(`/athlete_data?event_id=${eventId}`);
+        const response = await fetch(`/api/athlete_data?event_id=${eventId}`);
         if (!response.ok) {
             const errorText = await response.text();
             throw new Error(`API error (${response.status}): ${errorText}`);

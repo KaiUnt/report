@@ -19,7 +19,7 @@ app = FastAPI()
 # Pfad zur Python-Umgebung
 python_executable = os.path.join(os.getcwd(), "venv", "bin", "python")
 
-app.mount("/index", StaticFiles(directory="frontend", html=True), name="static")
+app.mount("/", StaticFiles(directory="frontend", html=True), name="static")
 
 # CORS Middleware hinzufügen
 app.add_middleware(
@@ -123,7 +123,7 @@ async def generate_pdf(event_id: str):
         logger.error(f"Fehler bei der PDF-Generierung: {e}")
         raise HTTPException(status_code=500, detail="Fehler bei der PDF-Generierung.")
 
-@app.get("/athlete_data")
+@app.get("/api/athlete_data")
 async def get_athlete_data(event_id: str):
     """Endpunkt, der die aufbereiteten Athletendaten für ein Event zurückgibt."""
     try:

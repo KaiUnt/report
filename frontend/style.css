@@ -21,27 +21,3 @@ ul li {
 ul li:hover {
     background-color: #f0f0f0;
 }
-
-/* Bereits bestehende Styles bleiben unverändert */
-
-/* Neue Styles für die Button-Container */
-.button-container {
-    display: flex;
-    gap: 10px;
-}
-
-.download-btn, .dashboard-btn {
-    padding: 5px 10px;
-    font-size: 14px;
-    cursor: pointer;
-}
-
-.dashboard-btn {
-    background-color: #3498db;
-    color: white;
-    border: 1px solid #2980b9;
-}
-
-.dashboard-btn:hover {
-    background-color: #2980b9;
-}
